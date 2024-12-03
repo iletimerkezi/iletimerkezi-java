@@ -13,9 +13,9 @@
 
 ```xml
 <dependency>
-<groupId>com.iletimerkezi</groupId>
-<artifactId>iletimerkezi-java</artifactId>
-<version>1.0.0</version>
+    <groupId>com.iletimerkezi</groupId>
+    <artifactId>iletimerkezi-java</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -33,41 +33,41 @@ implementation 'com.iletimerkezi:iletimerkezi-java:1.0.0'
 
 ```java
 import com.iletimerkezi.IletiMerkeziClient;
+
 IletiMerkeziClient client = new IletiMerkeziClient(
-"API_KEY", // API Anahtarı
-"API_HASH", // API Hash
-"SENDER" // Varsayılan Gönderici Adı
+    "API_KEY", // API Anahtarı
+    "API_HASH", // API Hash
+    "SENDER" // Varsayılan Gönderici Adı
 );
 ```
-
 
 ### SMS Gönderme
 
 ```java
 // Tek alıcıya SMS gönderme
-client.sms()
-.send("+905321234567", "Merhaba Dünya!");
+client.sms().send("+90532123xxxx", "Merhaba Dünya!");
+
 // Çoklu alıcıya SMS gönderme
 List<String> recipients = Arrays.asList(
-"+905321234567",
-"+905371234567"
+    "+90532123xxxx",
+    "+90537123xxxx"
 );
-client.sms()
-.send(recipients, "Merhaba Dünya!");
+
+client.sms().send(recipients, "Merhaba Dünya!");
+
 // İleri tarihli SMS gönderme
 client.sms()
-.schedule("2024-12-31 23:59:59")
-.send("+905321234567", "Yeni Yıl Mesajı");
+    .schedule("2024-12-31 23:59:59")
+    .send("+90532123xxxx", "Yeni Yıl Mesajı");
 ```
 
 ### Rapor Sorgulama
 
 ```java
 // Özet rapor alma
-client.summary()
-.list("2024-01-01", "2024-01-31");
+client.summary().list("2024-01-01", "2024-01-31");
 // Sonraki sayfa
-client.summary()
+client.summary().next();
 .next();
 ```
 
@@ -83,9 +83,10 @@ System.out.println("SMS Kredisi: " + response.getCredits());
 
 ```java
 String webhookData = "..."; // POST ile gelen veri
+
 WebhookReport report = client.webhook().process(webhookData);
 if (report.isDelivered()) {
-System.out.println("SMS iletildi: " + report.getTo());
+    System.out.println("SMS iletildi: " + report.getTo());
 }
 ```
 
@@ -93,14 +94,11 @@ System.out.println("SMS iletildi: " + report.getTo());
 
 ```java
 // Numara ekleme
-client.blacklist()
-.add("+905321234567");
+client.blacklist().add("+90532123xxxx");
 // Numara çıkarma
-client.blacklist()
-.remove("+905321234567");
+client.blacklist().remove("+90532123xxxx");
 // Liste sorgulama
-client.blacklist()
-.list(1);
+client.blacklist().list(1);
 ```
 
 
@@ -108,12 +106,12 @@ client.blacklist()
 
 ```java
 try {
-client.sms().send("+905321234567", "Test mesajı");
+    client.sms().send("+90532123xxxx", "Test mesajı");
 } catch (IOException e) {
-// Ağ hatası
-System.err.println("Ağ hatası: " + e.getMessage());
+    // Ağ hatası
+    System.err.println("Ağ hatası: " + e.getMessage());
 } catch (Exception e) {
-// Diğer hatalar
+    // Diğer hatalar
 System.err.println("Hata: " + e.getMessage());
 }
 ```
